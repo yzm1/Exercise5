@@ -15,7 +15,16 @@ typedef struct BST
     TreeNode* root;
 }BST;
 
+
 void initBST(BST* bst);
 void insertBST(BST* bst, int value);
+TreeNode* createNode(int value);
+void insert(TreeNode* root, TreeNode* newNode);
+void printTreeInorder(BST* bst);
+void inorder(TreeNode* root);
+void destroyBST(BST* bst);
+void destroy(TreeNode* root);
+int findIndexNFromLast(BST* bst, int N);
+
 
 #endif // !_BST_ADT_H
