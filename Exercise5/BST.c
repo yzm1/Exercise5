@@ -64,9 +64,8 @@ void destroyBST(BST* bst) {
 void destroy(TreeNode* root) {
 	if (root != NULL) {
 		destroy(root->right);
-		free(root->right);
 		destroy(root->left);
-		free(root->left);
+		free(root);
 	}
 }
 int findIndexNFromLast(BST* bst, int N) {
@@ -78,7 +77,7 @@ int findIndexNFromLast(BST* bst, int N) {
 	}
 }
 
-int findIndex(TreeNode* root, int N, int* count, int* value) {
+void findIndex(TreeNode* root, int N, int* count, int* value) {
 	if (root == NULL || *count >= N)
 		return;
 		
@@ -91,7 +90,7 @@ int findIndex(TreeNode* root, int N, int* count, int* value) {
 		return;
 	}
 
-	return findIndex(root->left, N, count, value);
+	findIndex(root->left, N, count, value);
 }
 
 
