@@ -71,48 +71,27 @@ void destroy(TreeNode* root) {
 }
 int findIndexNFromLast(BST* bst, int N) {
 	if (bst->root != NULL) {
-		int* count = 0;
-		return findIndex(bst->root, N, count);
+		int count = 0;
+		int value = 0;
+		findIndex(bst->root, N, &count, &value);
+		return value;
 	}
 }
 
-int findIndex(TreeNode* root, int N, int* count) {
-	
-	if(*count > 0 && *count != N)
-		*count++;
-	else if (*count == N) { //
-		return root->element;
-	}
-	else if(root->left == NULL && root->right == NULL && count == 0)
-		return ++(*count);
-	else if (root->right != NULL) //prefer right
-		return findIndex(root->right, N, count);
-	else if (root->left != NULL)
-		return findIndex(root->left, N, count);//settle for left
-}
+int findIndex(TreeNode* root, int N, int* count, int* value) {
+	if (root == NULL || *count >= N)
+		return;
+		
+	findIndex(root->right, N, count, value);
 
+	(*count)++;
 
-int findIndex2(TreeNode* root, int N, int* count) {
-	int value = 0;
-	if (count == 0) {
-		if (root->left == NULL && root->right == NULL)
-			value = ++(*count);
-		else if (root->right != NULL) //prefer right
-			value = findIndex(root->right, N, count);
-		else if (root->left != NULL)
-			value = findIndex(root->left, N, count);//settle for left
-	}
-	else if (count < N) {
-		++(*count);
-		if (root->right != NULL) //prefer right
-			value = findIndex(root->right, N, count);
-		else if (root->left != NULL)
-			value = findIndex(root->left, N, count);//settle for left
-	}
-	else if (count == N) {
-		++(*count);
+	if (*count == N) {
 		value = root->element;
+		return;
 	}
-	return value;
+
+	return findIndex(root->left, N, count, value);
 }
+
 
