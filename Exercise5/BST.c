@@ -1,6 +1,9 @@
 #include "BST.h"
 #include <stdlib.h>
-#define CheckNULL(node) if((temp) == NULL){ printf("Memmory allocation failed"); exit(1); }
+#define CheckNULL(node) if((node) == NULL){ \
+	 printf("Memmory allocation failed"); \
+	 exit(1); \
+	}
 
 void initBST(BST* bst) {
 	bst->root = NULL;
