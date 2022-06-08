@@ -26,5 +26,7 @@ void destroyBST(BST* bst);
 void destroy(TreeNode* root);
 int findIndexNFromLast(BST* bst, int N);
 void findIndex(TreeNode*, int N, int *count, int *value);
+int sameHeightLeaves(BST* bst);
+void samesame(TreeNode* root, int* thesame, int nowdepth, int* maxdepth);
 
 #endif // !_BST_ADT_H

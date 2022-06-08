@@ -1,9 +1,12 @@
 #include "BST.h"
 #include <stdlib.h>
-#define CheckNULL(node) if((node) == NULL){ \
-	 printf("Memmory allocation failed"); \
-	 exit(1); \
-	}
+#include <stdio.h>
+#define CheckNULL(node) do { \
+	 if((node) == NULL){ \
+			printf("Memmory allocation failed"); \
+			exit(1); \
+		} \
+	}while(0)
 
 void initBST(BST* bst) {
 	bst->root = NULL;
@@ -71,6 +74,7 @@ void destroy(TreeNode* root) {
 		free(root);
 	}
 }
+
 int findIndexNFromLast(BST* bst, int N) {
 	if (bst->root != NULL) {
 		int count = 0;
@@ -83,17 +87,44 @@ int findIndexNFromLast(BST* bst, int N) {
 void findIndex(TreeNode* root, int N, int* count, int* value) {
 	if (root == NULL || *count >= N)
 		return;
-		
+
 	findIndex(root->right, N, count, value);
 
 	(*count)++;
 
 	if (*count == N) {
-		value = root->element;
+		*value = root->element;
 		return;
 	}
 
 	findIndex(root->left, N, count, value);
 }
 
+int sameHeightLeaves(BST* bst) {
 
+	if (bst->root != NULL) {
+		int thesame = 1;
+		int maxdepth = -1;//-1 means not used
+
+		samesame(bst->root, &thesame, 0, &maxdepth);
+		return thesame;
+	}
+}
+
+void samesame(TreeNode* root, int* thesame, int nowdepth, int* maxdepth) {
+	if (root == NULL || *thesame == 0) return;
+
+	if (root->left == NULL && root->right == NULL) { //reached a leaf
+		if (*maxdepth == -1) { //reached first leaf, use its depth as maxdepth
+			*maxdepth = nowdepth;
+		}
+		else if (*maxdepth != nowdepth) { //reached another leaf that has a different depth
+			//illegal depth
+			*thesame = 0;
+		}
+
+		return;
+	}
+	samesame(root->right, thesame, nowdepth + 1, maxdepth);
+	samesame(root->left, thesame, nowdepth + 1, maxdepth);
+}
